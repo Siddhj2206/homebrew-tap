@@ -35,20 +35,20 @@ cask "ghostty-linux" do
     desktop_file = "#{staged_path}/squashfs-root/com.mitchellh.ghostty.desktop"
     if File.exist?(desktop_file)
       contents = File.read(desktop_file)
-      contents.gsub!(%r{Exec=.*}, "Exec=#{HOMEBREW_PREFIX}/bin/ghostty")
-      contents.gsub!(%r{Icon=.*}, "Icon=#{Dir.home}/.local/share/icons/com.mitchellh.ghostty.png")
+      contents.gsub!(/Exec=.*/, "Exec=#{HOMEBREW_PREFIX}/bin/ghostty")
+      contents.gsub!(/Icon=.*/, "Icon=#{Dir.home}/.local/share/icons/com.mitchellh.ghostty.png")
       File.write(desktop_file, contents)
     end
   end
 
   uninstall_postflight do
-    FileUtils.rm_f "#{Dir.home}/.local/share/applications/com.mitchellh.ghostty.desktop"
-    FileUtils.rm_f "#{Dir.home}/.local/share/icons/com.mitchellh.ghostty.png"
+    FileUtils.rm("#{Dir.home}/.local/share/applications/com.mitchellh.ghostty.desktop")
+    FileUtils.rm("#{Dir.home}/.local/share/icons/com.mitchellh.ghostty.png")
   end
 
   zap trash: [
-    "~/.config/ghostty",
     "~/.cache/ghostty",
+    "~/.config/ghostty",
     "~/.local/share/ghostty",
   ]
 end
