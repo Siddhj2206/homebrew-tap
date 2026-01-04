@@ -46,8 +46,11 @@ cask "ghostty-linux" do
            target: "#{Dir.home}/.local/share/nvim/site/ftplugin/ghostty.vim"
   artifact "squashfs-root/share/nvim/site/syntax/ghostty.vim",
            target: "#{Dir.home}/.local/share/nvim/site/syntax/ghostty.vim"
+  artifact "squashfs-root/share/dbus-1/services/com.mitchellh.ghostty.service",
+           target: "#{Dir.home}/.local/share/dbus-1/services/com.mitchellh.ghostty.service"
 
   preflight do
+    FileUtils.mkdir_p "#{Dir.home}/.local/share/dbus-1/services"
     FileUtils.mkdir_p "#{Dir.home}/.local/share/applications"
     FileUtils.mkdir_p "#{Dir.home}/.local/share/icons"
     FileUtils.mkdir_p "#{Dir.home}/.local/share/nautilus-python/extensions"
@@ -67,10 +70,15 @@ cask "ghostty-linux" do
     system appimage_path, "--appimage-extract", chdir: staged_path
     FileUtils.rm appimage_path
 
-    desktop_content = File.read("#{staged_path}/squashfs-root/com.mitchellh.ghostty.desktop")
-    desktop_content.gsub!(/^TryExec=.*/, "TryExec=#{HOMEBREW_PREFIX}/bin/ghostty")
-    desktop_content.gsub!(/^Exec=.*/, "Exec=#{HOMEBREW_PREFIX}/bin/ghostty")
-    File.write("#{staged_path}/squashfs-root/com.mitchellh.ghostty.desktop", desktop_content)
+    desktop_file = "#{staged_path}/squashfs-root/com.mitchellh.ghostty.desktop"
+    desktop_content = File.read(desktop_file)
+    desktop_content.gsub!(%r{/__w/ghostty-appimage[^\s]*}, "#{HOMEBREW_PREFIX}/bin/ghostty")
+    File.write(desktop_file, desktop_content)
+
+    dbus_service = "#{staged_path}/squashfs-root/share/dbus-1/services/com.mitchellh.ghostty.service"
+    dbus_content = File.read(dbus_service)
+    dbus_content.gsub!(%r{/__w/ghostty-appimage[^\s]*}, "#{HOMEBREW_PREFIX}/bin/ghostty")
+    File.write(dbus_service, dbus_content)
   end
 
   postflight do
@@ -81,6 +89,7 @@ cask "ghostty-linux" do
     "~/.cache/ghostty",
     "~/.config/ghostty",
     "~/.local/share/applications/com.mitchellh.ghostty.desktop",
+    "~/.local/share/dbus-1/services/com.mitchellh.ghostty.service",
     "~/.local/share/ghostty",
     "~/.local/share/icons/com.mitchellh.ghostty.png",
     "~/.local/share/kio/servicemenus/com.mitchellh.ghostty.desktop",
