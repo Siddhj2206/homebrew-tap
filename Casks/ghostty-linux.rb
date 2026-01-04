@@ -15,14 +15,34 @@ cask "ghostty-linux" do
   depends_on formula: "squashfs"
 
   binary "squashfs-root/bin/ghostty"
+  bash_completion "squashfs-root/share/bash-completion/completions/ghostty.bash"
+  fish_completion "squashfs-root/share/fish/vendor_completions.d/ghostty.fish"
+  zsh_completion "squashfs-root/share/zsh/site-functions/_ghostty"
   artifact "squashfs-root/com.mitchellh.ghostty.desktop",
            target: "#{Dir.home}/.local/share/applications/com.mitchellh.ghostty.desktop"
   artifact "squashfs-root/com.mitchellh.ghostty.png",
            target: "#{Dir.home}/.local/share/icons/com.mitchellh.ghostty.png"
+  artifact "squashfs-root/share/nautilus-python/extensions/ghostty.py",
+           target: "#{Dir.home}/.local/share/nautilus-python/extensions/ghostty.py"
+  artifact "squashfs-root/share/ghostty",
+           target: "#{Dir.home}/.local/share/ghostty"
+  artifact "squashfs-root/share/kio/servicemenus",
+           target: "#{Dir.home}/.local/share/kio/servicemenus"
+  artifact "squashfs-root/share/terminfo/g/ghostty",
+           target: "#{Dir.home}/.terminfo/g/ghostty"
+  artifact "squashfs-root/share/vim/vimfiles",
+           target: "#{Dir.home}/.vim"
+  artifact "squashfs-root/share/nvim/site",
+           target: "#{Dir.home}/.local/share/nvim/site"
 
   preflight do
     FileUtils.mkdir_p "#{Dir.home}/.local/share/applications"
     FileUtils.mkdir_p "#{Dir.home}/.local/share/icons"
+    FileUtils.mkdir_p "#{Dir.home}/.local/share/nautilus-python/extensions"
+    FileUtils.mkdir_p "#{Dir.home}/.local/share/kio/servicemenus"
+    FileUtils.mkdir_p "#{Dir.home}/.local/share/nvim/site"
+    FileUtils.mkdir_p "#{Dir.home}/.terminfo/g"
+    FileUtils.mkdir_p "#{Dir.home}/.vim"
 
     appimage_path = "#{staged_path}/Ghostty-#{version}-x86_64.AppImage"
     system "chmod", "+x", appimage_path
@@ -34,9 +54,23 @@ cask "ghostty-linux" do
     File.write("#{staged_path}/squashfs-root/com.mitchellh.ghostty.desktop", desktop_content)
   end
 
+  postflight do
+    ohai "Restart Nautilus to enable 'Open in Ghostty': nautilus -q"
+  end
+
   zap trash: [
     "~/.cache/ghostty",
     "~/.config/ghostty",
+    "~/.local/share/applications/com.mitchellh.ghostty.desktop",
     "~/.local/share/ghostty",
+    "~/.local/share/icons/com.mitchellh.ghostty.png",
+    "~/.local/share/kio/servicemenus",
+    "~/.local/share/nautilus-python/extensions/ghostty.py",
+    "~/.local/share/nvim/site",
+    "~/.terminfo/g/ghostty",
+    "~/.vim/compiler/ghostty.vim",
+    "~/.vim/ftdetect/ghostty.vim",
+    "~/.vim/ftplugin/ghostty.vim",
+    "~/.vim/syntax/ghostty.vim",
   ]
 end
