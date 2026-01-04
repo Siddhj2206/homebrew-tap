@@ -50,6 +50,7 @@ cask "ghostty-linux" do
     FileUtils.rm appimage_path
 
     desktop_content = File.read("#{staged_path}/squashfs-root/com.mitchellh.ghostty.desktop")
+    desktop_content.gsub!(/^TryExec=.*/, "TryExec=#{HOMEBREW_PREFIX}/bin/ghostty")
     desktop_content.gsub!(/^Exec=.*/, "Exec=#{HOMEBREW_PREFIX}/bin/ghostty")
     File.write("#{staged_path}/squashfs-root/com.mitchellh.ghostty.desktop", desktop_content)
   end
