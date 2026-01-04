@@ -16,15 +16,10 @@ cask "ghostty-linux" do
 
   depends_on formula: "squashfs"
 
-  # Binary
   binary "squashfs-root/bin/ghostty"
-
-  # Shell completions
   bash_completion "squashfs-root/share/bash-completion/completions/ghostty.bash"
   fish_completion "squashfs-root/share/fish/vendor_completions.d/ghostty.fish"
   zsh_completion "squashfs-root/share/zsh/site-functions/_ghostty"
-
-  # Desktop integration
   artifact "squashfs-root/com.mitchellh.ghostty.desktop",
            target: "#{Dir.home}/.local/share/applications/com.mitchellh.ghostty.desktop"
   artifact "squashfs-root/com.mitchellh.ghostty.png",
@@ -33,18 +28,12 @@ cask "ghostty-linux" do
            target: "#{Dir.home}/.local/share/dbus-1/services/com.mitchellh.ghostty.service"
   artifact "squashfs-root/share/ghostty",
            target: "#{Dir.home}/.local/share/ghostty"
-
-  # File manager extensions (Nautilus for GNOME, KIO for KDE)
   artifact "squashfs-root/share/nautilus-python/extensions/ghostty.py",
            target: "#{Dir.home}/.local/share/nautilus-python/extensions/ghostty.py"
   artifact "squashfs-root/share/kio/servicemenus/com.mitchellh.ghostty.desktop",
            target: "#{Dir.home}/.local/share/kio/servicemenus/com.mitchellh.ghostty.desktop"
-
-  # Terminfo
   artifact "squashfs-root/share/terminfo/g/ghostty",
            target: "#{Dir.home}/.terminfo/g/ghostty"
-
-  # Vim syntax files
   artifact "squashfs-root/share/vim/vimfiles/compiler/ghostty.vim",
            target: "#{Dir.home}/.vim/compiler/ghostty.vim"
   artifact "squashfs-root/share/vim/vimfiles/ftdetect/ghostty.vim",
@@ -53,8 +42,6 @@ cask "ghostty-linux" do
            target: "#{Dir.home}/.vim/ftplugin/ghostty.vim"
   artifact "squashfs-root/share/vim/vimfiles/syntax/ghostty.vim",
            target: "#{Dir.home}/.vim/syntax/ghostty.vim"
-
-  # Neovim syntax files
   artifact "squashfs-root/share/nvim/site/compiler/ghostty.vim",
            target: "#{Dir.home}/.local/share/nvim/site/compiler/ghostty.vim"
   artifact "squashfs-root/share/nvim/site/ftdetect/ghostty.vim",
