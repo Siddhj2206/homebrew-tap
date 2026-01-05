@@ -1,5 +1,5 @@
 # MoreWaita icon theme - an Adwaita-styled companion icon theme for GNOME
-cask "morewaita" do
+cask "morewaita-icon-theme" do
   version "49"
   sha256 "33a00ac6a9214d228b43071a09e0ba59b92da225b1321afe246f64f6ec96bb48"
 
@@ -10,7 +10,8 @@ cask "morewaita" do
 
   livecheck do
     url "https://github.com/somepaulo/MoreWaita/releases/latest"
-    strategy :github_latest
+    regex(%r{/tag/v?(\d+(?:\.\d+)*)$}i)
+    strategy :header_match
   end
 
   preflight do
