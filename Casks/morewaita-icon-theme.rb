@@ -9,9 +9,9 @@ cask "morewaita-icon-theme" do
   homepage "https://github.com/somepaulo/MoreWaita"
 
   livecheck do
-    url "https://github.com/somepaulo/MoreWaita/releases/latest"
-    regex(%r{/tag/v?(\d+(?:\.\d+)*)$}i)
-    strategy :header_match
+    url :url
+    regex(/^v?(\d+(?:\.\d+)*)$/i)
+    strategy :github_latest
   end
 
   preflight do
