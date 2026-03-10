@@ -34,22 +34,6 @@ cask "ghostty-linux" do
            target: "#{Dir.home}/.local/share/kio/servicemenus/com.mitchellh.ghostty.desktop"
   artifact "squashfs-root/share/terminfo/g/ghostty",
            target: "#{Dir.home}/.terminfo/g/ghostty"
-  artifact "squashfs-root/share/vim/vimfiles/compiler/ghostty.vim",
-           target: "#{Dir.home}/.vim/compiler/ghostty.vim"
-  artifact "squashfs-root/share/vim/vimfiles/ftdetect/ghostty.vim",
-           target: "#{Dir.home}/.vim/ftdetect/ghostty.vim"
-  artifact "squashfs-root/share/vim/vimfiles/ftplugin/ghostty.vim",
-           target: "#{Dir.home}/.vim/ftplugin/ghostty.vim"
-  artifact "squashfs-root/share/vim/vimfiles/syntax/ghostty.vim",
-           target: "#{Dir.home}/.vim/syntax/ghostty.vim"
-  artifact "squashfs-root/share/nvim/site/compiler/ghostty.vim",
-           target: "#{Dir.home}/.local/share/nvim/site/compiler/ghostty.vim"
-  artifact "squashfs-root/share/nvim/site/ftdetect/ghostty.vim",
-           target: "#{Dir.home}/.local/share/nvim/site/ftdetect/ghostty.vim"
-  artifact "squashfs-root/share/nvim/site/ftplugin/ghostty.vim",
-           target: "#{Dir.home}/.local/share/nvim/site/ftplugin/ghostty.vim"
-  artifact "squashfs-root/share/nvim/site/syntax/ghostty.vim",
-           target: "#{Dir.home}/.local/share/nvim/site/syntax/ghostty.vim"
 
   preflight do
     # Create target directories for artifacts
@@ -59,15 +43,7 @@ cask "ghostty-linux" do
       "#{Dir.home}/.local/share/icons",
       "#{Dir.home}/.local/share/kio/servicemenus",
       "#{Dir.home}/.local/share/nautilus-python/extensions",
-      "#{Dir.home}/.local/share/nvim/site/compiler",
-      "#{Dir.home}/.local/share/nvim/site/ftdetect",
-      "#{Dir.home}/.local/share/nvim/site/ftplugin",
-      "#{Dir.home}/.local/share/nvim/site/syntax",
       "#{Dir.home}/.terminfo/g",
-      "#{Dir.home}/.vim/compiler",
-      "#{Dir.home}/.vim/ftdetect",
-      "#{Dir.home}/.vim/ftplugin",
-      "#{Dir.home}/.vim/syntax",
     ]
     dirs.each { |dir| FileUtils.mkdir_p(dir) }
 
@@ -115,14 +91,6 @@ cask "ghostty-linux" do
     "~/.local/share/icons/com.mitchellh.ghostty.png",
     "~/.local/share/kio/servicemenus/com.mitchellh.ghostty.desktop",
     "~/.local/share/nautilus-python/extensions/ghostty.py",
-    "~/.local/share/nvim/site/compiler/ghostty.vim",
-    "~/.local/share/nvim/site/ftdetect/ghostty.vim",
-    "~/.local/share/nvim/site/ftplugin/ghostty.vim",
-    "~/.local/share/nvim/site/syntax/ghostty.vim",
     "~/.terminfo/g/ghostty",
-    "~/.vim/compiler/ghostty.vim",
-    "~/.vim/ftdetect/ghostty.vim",
-    "~/.vim/ftplugin/ghostty.vim",
-    "~/.vim/syntax/ghostty.vim",
   ]
 end
